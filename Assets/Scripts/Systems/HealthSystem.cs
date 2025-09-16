@@ -16,16 +16,22 @@ public class HealthSystem : MonoBehaviour
     public UnityEvent<float> OnChangeHealth;
     public UnityEvent<float> UpdateHearts;
 
-
+    public UnityEvent OnHurt;
 
     public UnityEvent OnZeroLifes;
+
+    public bool canGetHurt = true;
 
     private void Start()
     {
         health = maxhealth;
-        this.gameObject.SetActive(true); //JUST FOR TRYING THAT HEALTH SYSTEM WORKS
-    }
 
+            if (this.TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))        
+            {
+                spriteRenderer.enabled = true; // activar el render
+            }   //JUST FOR TRYING THAT HEALTH SYSTEM WORKS
+    }
+    
     public float GetMaxHealth()
     {
         return maxhealth;
@@ -48,13 +54,18 @@ public class HealthSystem : MonoBehaviour
 
     public void Hurt(float damage)
     {
+        if (!canGetHurt) return;
         health -= damage;
         if (health <= 0)
         {
             health = 0;
             Debug.Log("Player Dead");
-            this.gameObject.SetActive(false); //JUST FOR TRYING THAT HEALTH SYSTEM WORKS
+            if (this.TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))        
+            {
+                spriteRenderer.enabled = false; // activar el render
+            }   //JUST FOR TRYING THAT HEALTH SYSTEM WORKS
         }
+        OnHurt.Invoke();
     }
 
     public void Heal(float heal)

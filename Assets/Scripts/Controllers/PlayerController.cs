@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,12 +13,18 @@ public class PlayerController : MonoBehaviour
     public float speed = 7f;
     private Rigidbody2D _rb = null;
 
+    public Vector3 startPosition;
+
+    private HealthSystem _hS = null;
+
     void Start()
     {
         TryGetComponent<MovementSystem>(out _mv);
         TryGetComponent<Rigidbody2D>(out _rb);
         TryGetComponent<GravitySystem>(out _gs);
-       _rb.linearDamping = 0f;
+        TryGetComponent<HealthSystem>(out _hS);
+       //_rb.linearDamping = 0f;
+        startPosition = transform.position;
 
         // Suscribir al evento performed (se llama solo una vez al presionar la tecla)
         playerChangeGravity.action.performed += ctx => _gs.ChangeGravity();
@@ -59,5 +66,30 @@ public class PlayerController : MonoBehaviour
         {
             transform.localScale = new Vector3(-0.4f, transform.localScale.y, 0.4f);
         }
+    }
+
+    public void RestartPosition()
+    {
+        _mv.StopMovement();
+        transform.position = startPosition;
+        _hS.canGetHurt = false;
+        StartCoroutine(SpriteFlicker());
+    }
+
+    IEnumerator SpriteFlicker()
+    {
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+
+            if (sprite.enabled != false) 
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    sprite.enabled = false;
+                    yield return new WaitForSeconds(0.1f);
+                    sprite.enabled = true;
+                    yield return new WaitForSeconds(0.1f);
+                }
+                _hS.canGetHurt = true;
+            }   
     }
 }

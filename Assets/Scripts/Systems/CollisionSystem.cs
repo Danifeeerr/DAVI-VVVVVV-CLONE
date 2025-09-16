@@ -1,12 +1,19 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System;
 
 public class CollisionSystem : MonoBehaviour
 {
-    public UnityEvent Collided;
+    public UnityEvent<GameObject, GameObject> Collided;
+    private GameObject myself;
+
+    void Start()
+    {
+        myself = this.gameObject;
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
-        {
-            Collided.Invoke();
-        }
+    {
+        Collided.Invoke(myself, collision.gameObject);
+     }
 }

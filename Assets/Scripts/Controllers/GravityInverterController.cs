@@ -15,10 +15,12 @@ public class GravityInverterController : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         if (gs != null && gravityInvertable)
         {
+            this.GetComponent<SpriteRenderer>().enabled = false;
             gravityInvertable = false;
             gs.ChangeGravity();
         }
         yield return new WaitForSeconds(0.5f);
+        this.GetComponent<SpriteRenderer>().enabled = true;
         gravityInvertable = true;
    }
 }
