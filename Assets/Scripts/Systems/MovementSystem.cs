@@ -43,7 +43,8 @@ public class MovementSystem : MonoBehaviour
         {
             direction = direc;
             speed = s;
-            _rb.AddForce(direction * speed);
+            //_rb.AddForce(direction * speed);
+            _rb.linearVelocity = direction * speed;
         }
 
     }
@@ -136,12 +137,5 @@ public class MovementSystem : MonoBehaviour
         }
     }
 
-    public void ChangeGravity()
-    {
-        if (_rb != null)
-        {
-            _rb.gravityScale = _rb.gravityScale * -1;
-            this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y * -1, this.transform.localScale.z);
-        }
-    }
+
 }
