@@ -5,6 +5,8 @@ using System;
 public class CollisionSystem : MonoBehaviour
 {
     public UnityEvent<GameObject, GameObject> Collided;
+    public UnityEvent<GameObject, GameObject> Triggered;
+
     private GameObject myself;
 
     void Start()
@@ -15,5 +17,10 @@ public class CollisionSystem : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         Collided.Invoke(myself, collision.gameObject);
-     }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        Triggered.Invoke(myself, other.gameObject);
+    }
 }

@@ -16,9 +16,11 @@ public class PlayerController : MonoBehaviour
     public Vector3 startPosition;
 
     private HealthSystem _hS = null;
+    
 
     void Start()
     {
+        ScreenController.Initialize();
         TryGetComponent<MovementSystem>(out _mv);
         TryGetComponent<Rigidbody2D>(out _rb);
         TryGetComponent<GravitySystem>(out _gs);
@@ -74,6 +76,11 @@ public class PlayerController : MonoBehaviour
         transform.position = startPosition;
         _hS.canGetHurt = false;
         StartCoroutine(SpriteFlicker());
+    }
+
+    public void setSpawnPosition(Vector3 pos)
+    {
+        startPosition = pos;
     }
 
     IEnumerator SpriteFlicker()
