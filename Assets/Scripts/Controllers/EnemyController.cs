@@ -8,19 +8,22 @@ public class EnemyController : MonoBehaviour
     private MovementSystem _mS;
     public float speed;
     public float timeSeconds;
+    private Vector3 initialPosition;
+    private bool positionSaved = false;
+
+
     void OnEnable()
     {
+        if (!positionSaved)
+        {
+            initialPosition = transform.position;
+            positionSaved = true;
+        }
+        transform.position = initialPosition;
         TryGetComponent<MovementSystem>(out _mS);
         StartCoroutine(moveHorizontal());
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    
     IEnumerator moveHorizontal()
     {
         while (true)

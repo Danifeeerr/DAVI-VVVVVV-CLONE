@@ -18,4 +18,13 @@ public class GravitySystem : MonoBehaviour
             this.transform.localScale = new Vector3(this.transform.localScale.x, this.transform.localScale.y * -1, this.transform.localScale.z);
         }
     }
+
+    public bool isGravityInverted()
+    {
+        if (_rb != null)
+        {
+            return _rb.gravityScale < 0;
+        }
+        return false;
+    }
 }

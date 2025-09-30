@@ -4,9 +4,21 @@ public class CheckpointController : MonoBehaviour
 {
     private Animator anim;
     public PlayerController _pC;
+    public GameObject checkpointLevel;
+
+    private bool checkpointGrabbed = false;
     void Start()
     {
+        checkpointGrabbed = false;
         TryGetComponent<Animator>(out anim);
+    }
+
+    private void OnEnable()
+    {
+        if (checkpointGrabbed && anim != null)
+        {
+            anim.SetBool("CheckpointGrabbed", true);
+        }
     }
 
     // Update is called once per frame
@@ -17,11 +29,14 @@ public class CheckpointController : MonoBehaviour
             if (anim.GetBool("CheckpointGrabbed") == false)
             {
                 anim.SetBool("CheckpointGrabbed", true);
-                if (_pC != null)
-                {
-                    _pC.setSpawnPosition(this.transform.position);
-                }
             }
+        }
+
+        if (!checkpointGrabbed && _pC != null)
+        {
+            checkpointGrabbed = true;
+            _pC.startPosition = this.transform.position;
+            ScreenController.setLastCheckpointScreen(checkpointLevel);
         }
     }
 }
