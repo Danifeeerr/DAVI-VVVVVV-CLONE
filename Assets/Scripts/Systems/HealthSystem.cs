@@ -14,7 +14,6 @@ public class HealthSystem : MonoBehaviour
     private float health;
 
     public UnityEvent<float> OnChangeHealth;
-    public UnityEvent<float> UpdateHearts;
 
     public UnityEvent OnHurt;
 
@@ -26,10 +25,10 @@ public class HealthSystem : MonoBehaviour
     {
         health = maxhealth;
 
-            if (this.TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))        
-            {
-                spriteRenderer.enabled = true; // activar el render
-            }   //JUST FOR TRYING THAT HEALTH SYSTEM WORKS
+        if (this.TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))        
+        {
+            spriteRenderer.enabled = true; 
+        }  
     }
     
     public float GetMaxHealth()
@@ -60,11 +59,12 @@ public class HealthSystem : MonoBehaviour
         {
             health = 0;
             Debug.Log("Player Dead");
-            if (this.TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))        
+            if (this.TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))
             {
-                spriteRenderer.enabled = false; // activar el render
-            }   //JUST FOR TRYING THAT HEALTH SYSTEM WORKS
+                spriteRenderer.enabled = false;
+            }
         }
+        OnChangeHealth.Invoke(health);
         OnHurt.Invoke();
     }
 
@@ -78,6 +78,6 @@ public class HealthSystem : MonoBehaviour
         { 
             health += heal;
         }
-
+        OnChangeHealth.Invoke(health);
     }
 }

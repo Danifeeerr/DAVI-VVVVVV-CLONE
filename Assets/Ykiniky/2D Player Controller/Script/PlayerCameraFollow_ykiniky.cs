@@ -19,7 +19,7 @@ namespace YkinikY
         // Update is called once per frame
         void Update()
         {
-            Vector2 newCameraPosition = Vector2.Lerp(transform.position, FindObjectOfType<PlayerController_ykiniky>().transform.position, 0.15f);
+            Vector2 newCameraPosition = Vector2.Lerp(transform.position, FindFirstObjectByType<PlayerController_ykiniky>().transform.position, 0.15f);
             transform.position = new Vector3(followX ? newCameraPosition.x : 0, followY ? newCameraPosition.y : 0, -10);
             if (zoomed)
             {

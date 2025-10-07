@@ -4,7 +4,7 @@ public class ObstacleController : MonoBehaviour
 {
     void Start()
     {
-        PlayerController player = FindObjectOfType<PlayerController>();
+        PlayerController player = FindFirstObjectByType<PlayerController>();
         if (player != null)
         {
             CollisionSystem playerCollisionSystem = player.GetComponent<CollisionSystem>();

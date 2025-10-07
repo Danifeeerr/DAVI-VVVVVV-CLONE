@@ -1,18 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using Unity.VisualScripting;
 
 
 public class PlayerController : MonoBehaviour
 {
-    public InputActionReference move;
-    public InputActionReference playerChangeGravity;
     private MovementSystem _mv;
     private GravitySystem _gs;
 
-    private Vector2 dir;
     public float speed = 7f;
-    private Rigidbody2D _rb = null;
 
     public Vector3 startPosition;
 
@@ -21,21 +18,47 @@ public class PlayerController : MonoBehaviour
     private bool isOnGround = false;
     public GameObject groundToucher;
 
+    private InputSystem_Actions _inputSA;
+    private Vector2 _moveValue;
 
+    //-----------------------------------Funcions d'inicialització-----------------------------------//
     void Start()
     {
         ScreenController.Initialize();
+    }
+
+    private void OnEnable()
+    {
         TryGetComponent<MovementSystem>(out _mv);
-        TryGetComponent<Rigidbody2D>(out _rb);
         TryGetComponent<GravitySystem>(out _gs);
         TryGetComponent<HealthSystem>(out _hS);
         startPosition = transform.position;
 
-        // Suscribir al evento performed (se llama solo una vez al presionar la tecla)
-        playerChangeGravity.action.performed += ctx => TryChangeGravity();
-
+        _inputSA = new InputSystem_Actions();
+        _inputSA.Player.Enable();
+        _inputSA.Player.Move.canceled += OnStop;
+        _inputSA.Player.Move.performed += OnMove;
+        _inputSA.Player.Jump.performed += OnGravityChange;
     }
 
+    //-----------------------------------Funcions d'Input System-----------------------------------//
+    private void OnMove(InputAction.CallbackContext c)
+    {
+        _moveValue = c.ReadValue<Vector2>();
+    }
+
+    private void OnStop(InputAction.CallbackContext c)
+    {
+        _moveValue = Vector2.zero;
+    }
+
+    private void OnGravityChange(InputAction.CallbackContext c)
+    {
+        TryChangeGravity();
+    }
+
+
+    //-----------------------------------Funcions de moviment i gravetat-----------------------------------//
     public void TryChangeGravity()
     {
         if (_gs != null && isOnGround)
@@ -44,43 +67,7 @@ public class PlayerController : MonoBehaviour
             isOnGround = false;
         }
     }
-    void OnEnable()
-    {
-        move.action.Enable();
-        playerChangeGravity.action.Enable();
-    }
-
-    void OnDisable()
-    {
-        move.action.Disable();
-        playerChangeGravity.action.Disable();
-    }
-
-    void FixedUpdate()
-    {
-        isOnGround = Physics2D.OverlapCircle(groundToucher.transform.position, 0.3f, LayerMask.GetMask("ground"));
-        dir = move.action.ReadValue<Vector2>();
-        dir = new Vector2(dir.x, 0);
-
-
-        if (dir.magnitude < 0.1f)
-        {
-            _mv.StopMovement();
-        }
-        Vector3 direction = new Vector3(dir.x, dir.y, 0);
-        _mv.Move(direction, speed);
-
-
-
-        if (dir.x > 0.01f)
-        {
-            transform.localScale = new Vector3(0.4f, transform.localScale.y, 0.4f);
-        }
-        else if (dir.x < -0.01f)
-        {
-            transform.localScale = new Vector3(-0.4f, transform.localScale.y, 0.4f);
-        }
-    }
+ 
 
     public void RestartPosition()
     {
@@ -125,5 +112,35 @@ public class PlayerController : MonoBehaviour
             isOnGround = true;
         }
     }
+ 
+
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    void FixedUpdate()
+    {
+
+        //Comrprovem si estem tocant terra
+        isOnGround = Physics2D.OverlapCircle(groundToucher.transform.position, 0.3f, LayerMask.GetMask("ground"));
+       
+        //Apliquem el moviment amb el vector direccional que ens dona l'input system
+        Vector3 direction = new Vector3(_moveValue.x, _moveValue.y, 0);
+        _mv.Move(direction, speed);
+
+
+        //Girem el personatge segons la direcció del moviment
+        if (_moveValue.x > 0.01f)
+        {
+            transform.localScale = new Vector3(0.4f, transform.localScale.y, 0.4f);
+        }
+        else if (_moveValue.x < -0.01f)
+        {
+            transform.localScale = new Vector3(-0.4f, transform.localScale.y, 0.4f);
+        }
+    }
+
+    
     
 }
