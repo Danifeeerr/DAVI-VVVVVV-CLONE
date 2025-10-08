@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - ground
+  - LEVEL1
   layers:
   - Default
   - TransparentFX
@@ -12,11 +13,11 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Checkpoint
+  - Player
+  - Obstacle
+  - Enemy
+  - ground
   - 
   - 
   - 

@@ -65,6 +65,7 @@
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
+        "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "DAVI-VVVVVV-CLONE.sln"
+    "dotnet.defaultSolution": "VVVVV DAVI.sln"
 }
