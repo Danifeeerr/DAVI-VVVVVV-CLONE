@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
         isOnGround = Physics2D.OverlapCircle(groundToucher.transform.position, 0.3f, LayerMask.GetMask("ground"));
        
         //Apliquem el moviment amb el vector direccional que ens dona l'input system
-        Vector3 direction = new Vector3(_moveValue.x, _moveValue.y, 0);
+        Vector3 direction = new Vector3(_moveValue.x, _rb.linearVelocity.y, 0);
         _mv.Move(direction, speed);
 
 
