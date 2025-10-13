@@ -7,31 +7,30 @@ public class EnemyController : MonoBehaviour
 
     private MovementSystem _mS;
     public float speed;
-    public float timeSeconds;
-    private Vector3 initialPosition;
-    private bool positionSaved = false;
+    public Transform position1;
+    public Transform position2;
+
+    private Vector3 targetPosition;
 
 
     void OnEnable()
     {
-        if (!positionSaved)
-        {
-            initialPosition = transform.position;
-            positionSaved = true;
-        }
-        transform.position = initialPosition;
         TryGetComponent<MovementSystem>(out _mS);
-        StartCoroutine(moveHorizontal());
+        if (position1 != null && position2 != null && _mS != null)
+        {
+            transform.position = position1.position;
+            targetPosition = position2.position;
+        }
+    }
+    
+    void Update()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        if (transform.position == targetPosition)
+        {
+            targetPosition = targetPosition == position1.position ? position2.position : position1.position;
+        }
     }
 
-    IEnumerator moveHorizontal()
-    {
-        while (true)
-        {
-            _mS.Move(Vector3.right, speed);
-            yield return new WaitForSeconds(timeSeconds);
-            _mS.Move(Vector3.left, speed);
-            yield return new WaitForSeconds(timeSeconds);
-        }
-    }
+
 }
