@@ -22488,6 +22488,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3861943794728770625, guid: e8859a11045ad6d4bb6a023b276e215d, type: 3}
+      propertyPath: m_GravityScale
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 7086089271510501772, guid: e8859a11045ad6d4bb6a023b276e215d, type: 3}
       propertyPath: OnChangeHealth.m_PersistentCalls.m_Calls.Array.size
       value: 0
