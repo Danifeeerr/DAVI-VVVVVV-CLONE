@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
     public Transform position2;
 
     private Vector3 targetPosition;
+    private Vector3 direction;
 
 
     void OnEnable()
@@ -20,15 +21,17 @@ public class EnemyController : MonoBehaviour
         {
             transform.position = position1.position;
             targetPosition = position2.position;
+            direction = (position2.position - position1.position).normalized;
         }
     }
     
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-        if (transform.position == targetPosition)
+        _mS.Move(direction, speed);
+        if (Vector3.SqrMagnitude(transform.position - targetPosition) < 0.1f)
         {
             targetPosition = targetPosition == position1.position ? position2.position : position1.position;
+            direction = -direction;
         }
     }
 

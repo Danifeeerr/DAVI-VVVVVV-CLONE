@@ -11,8 +11,6 @@ public static class ScreenController {
     public static void Initialize()
     {
         mainCamera = GameObject.FindWithTag("MainCamera");
-       // _lastCheckpointScreen = GameObject.FindWithTag("LEVEL1");
-
     }
 
     public static void changeScreen(GameObject screenToLoad)

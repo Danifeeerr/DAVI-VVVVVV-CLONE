@@ -43,7 +43,6 @@ public class MovementSystem : MonoBehaviour
         {
             direction = direc;
             speed = s;
-            //_rb.AddForce(direction * speed);
             _rb.linearVelocity = direction * speed;
         }
 
