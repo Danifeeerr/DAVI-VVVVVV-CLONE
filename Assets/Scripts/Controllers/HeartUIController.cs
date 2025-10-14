@@ -92,6 +92,7 @@ public class HeartUIController : MonoBehaviour
     }
     public void Update()
     {
+        if (_hS == null) return;
         this.transform.position = _hS.transform.position + new Vector3(healthOffset, 0.7f, 0);
     }
 }

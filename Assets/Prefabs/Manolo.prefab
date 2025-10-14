@@ -93,7 +93,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3487068460028661754, guid: 415ec8bdb68eca34fa6d3fdb098ddd8e, type: 3}
       propertyPath: m_Name
-      value: Player Variant
+      value: Manolo
       objectReference: {fileID: 0}
     - target: {fileID: 8814141059296468861, guid: 415ec8bdb68eca34fa6d3fdb098ddd8e, type: 3}
       propertyPath: m_Enabled
@@ -143,6 +143,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3487068460028661754, guid: 415ec8bdb68eca34fa6d3fdb098ddd8e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 841161797447025906}
+    - targetCorrespondingSourceObject: {fileID: 3487068460028661754, guid: 415ec8bdb68eca34fa6d3fdb098ddd8e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5110997023200024800}
     - targetCorrespondingSourceObject: {fileID: 3487068460028661754, guid: 415ec8bdb68eca34fa6d3fdb098ddd8e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7086089271510501772}
@@ -230,6 +233,21 @@ CapsuleCollider2D:
   m_Offset: {x: -0.009122491, y: -0.072580874}
   m_Size: {x: 2.3165, y: 2.3165}
   m_Direction: 0
+--- !u!114 &5110997023200024800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9172462525098030342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2680e5cf4684e594696bd063b18bcad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnDestroy:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7086089271510501772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,9 +263,6 @@ MonoBehaviour:
   maxhealth: 3
   health: 3
   OnChangeHealth:
-    m_PersistentCalls:
-      m_Calls: []
-  UpdateHearts:
     m_PersistentCalls:
       m_Calls: []
   OnHurt:
@@ -267,7 +282,19 @@ MonoBehaviour:
         m_CallState: 2
   OnZeroLifes:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5110997023200024800}
+        m_TargetAssemblyTypeName: DestroySystem, Assembly-CSharp
+        m_MethodName: DestroyObj
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   canGetHurt: 1
 --- !u!114 &8904212554857535408
 MonoBehaviour:

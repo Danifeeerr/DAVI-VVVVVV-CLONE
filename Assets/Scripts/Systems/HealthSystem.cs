@@ -58,11 +58,7 @@ public class HealthSystem : MonoBehaviour
         if (health <= 0)
         {
             health = 0;
-            Debug.Log("Player Dead");
-            if (this.TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))
-            {
-                spriteRenderer.enabled = false;
-            }
+            OnZeroLifes.Invoke();
         }
         OnChangeHealth.Invoke(health);
         OnHurt.Invoke();
