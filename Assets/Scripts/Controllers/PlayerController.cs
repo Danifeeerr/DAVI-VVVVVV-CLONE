@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 7f;
 
     public Vector3 startPosition;
+    public GameObject pauseMenu;
 
     private HealthSystem _hS = null;
 
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
         _inputSA.Player.Move.canceled += OnStop;
         _inputSA.Player.Move.performed += OnMove;
         _inputSA.Player.Jump.performed += OnGravityChange;
+        _inputSA.Player.Pause.performed += OpenPauseMenu;
     }
 
     //-----------------------------------Funcions d'Input System-----------------------------------//
@@ -57,6 +59,12 @@ public class PlayerController : MonoBehaviour
     private void OnGravityChange(InputAction.CallbackContext c)
     {
         TryChangeGravity();
+    }
+
+    private void OpenPauseMenu(InputAction.CallbackContext c)
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0f;
     }
 
 
