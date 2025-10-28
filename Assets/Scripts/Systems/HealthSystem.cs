@@ -25,10 +25,11 @@ public class HealthSystem : MonoBehaviour
     {
         health = maxhealth;
 
-        if (this.TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))        
+      /*  if (this.TryGetComponent<SpriteRenderer>(out SpriteRenderer spriteRenderer))        
         {
             spriteRenderer.enabled = true; 
         }  
+        */
     }
     
     public float GetMaxHealth()

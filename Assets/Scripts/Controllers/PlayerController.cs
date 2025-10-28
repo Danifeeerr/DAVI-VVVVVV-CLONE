@@ -1,13 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 using System.Collections;
 using Unity.VisualScripting;
 
 
 public class PlayerController : MonoBehaviour
 {
+    public UnityEvent winner;
     private MovementSystem _mv;
     private GravitySystem _gs;
+    private float fruitCounter = 0;
 
     public float speed = 7f;
 
@@ -36,6 +39,7 @@ public class PlayerController : MonoBehaviour
         TryGetComponent<HealthSystem>(out _hS);
         TryGetComponent<Rigidbody2D>(out _rb);
         startPosition = transform.position;
+        fruitCounter = 0;
 
         _inputSA = new InputSystem_Actions();
         _inputSA.Player.Enable();
@@ -122,9 +126,19 @@ public class PlayerController : MonoBehaviour
             isOnGround = true;
         }
     }
- 
 
 
+    //-----------------------------------Altres funcions-----------------------------------//
+
+    public void fruitGrabbed()
+    {
+        Debug.Log("frutita");
+        fruitCounter += 1;
+        if (fruitCounter == 3)
+        {
+            winner.Invoke();
+        }
+    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
