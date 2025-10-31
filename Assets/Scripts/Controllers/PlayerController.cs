@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     private InputSystem_Actions _inputSA;
     private Vector2 _moveValue;
     private Rigidbody2D _rb;
+    public AudioClip gravityChangeSFX;
+    public AudioClip damageSFX;
+
 
     //-----------------------------------Funcions d'inicialització-----------------------------------//
     void Start()
@@ -67,8 +70,11 @@ public class PlayerController : MonoBehaviour
 
     private void OpenPauseMenu(InputAction.CallbackContext c)
     {
-        pauseMenu.SetActive(true);
-        Time.timeScale = 0f;
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
 
 
@@ -77,6 +83,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_gs != null && isOnGround)
         {
+            AudioController.Instance.PlaySFX(gravityChangeSFX);
             _gs.ChangeGravity();
             isOnGround = false;
         }
@@ -132,12 +139,16 @@ public class PlayerController : MonoBehaviour
 
     public void fruitGrabbed()
     {
-        Debug.Log("frutita");
         fruitCounter += 1;
         if (fruitCounter == 3)
         {
             winner.Invoke();
         }
+    }
+
+    public void receiveDamage()
+    {
+        AudioController.Instance.PlaySFX(damageSFX);
     }
 
 

@@ -7,6 +7,7 @@ public class CheckpointController : MonoBehaviour
     public GameObject checkpointLevel;
 
     private bool checkpointGrabbed = false;
+    public AudioClip checkpointSFX;
     void Start()
     {
         checkpointGrabbed = false;
@@ -21,19 +22,20 @@ public class CheckpointController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     public void changeAnimationState()
     {
         if (anim != null)
         {
             if (anim.GetBool("CheckpointGrabbed") == false)
             {
+                AudioController.Instance.PlaySFX(checkpointSFX);
                 anim.SetBool("CheckpointGrabbed", true);
             }
         }
 
         if (!checkpointGrabbed && _pC != null)
         {
+            
             checkpointGrabbed = true;
             _pC.startPosition = this.transform.position;
             ScreenController.setLastCheckpointScreen(checkpointLevel);

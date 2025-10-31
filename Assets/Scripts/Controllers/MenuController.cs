@@ -1,13 +1,21 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEditor;
+using UnityEngine.Events;
+using System.Collections;
 public class MenuController : MonoBehaviour
 {
+    public AudioClip menuMusic;
+    public AudioClip level1Music;
 
     void OnEnable()
     {
-        //AudioController.Instance.PlayMusic(menuMusic);
+        if (menuMusic != null)
+        {
+            AudioController.Instance.PlayMusic(menuMusic);
+        }
     }
+
     public void LoadScene(SceneAsset escena)
     {
         string nomEscena = escena.name;
@@ -32,5 +40,10 @@ public class MenuController : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1f;
+    }
+
+    public void Play()
+    {
+        AudioController.Instance.PlayMusic(level1Music);
     }
 }

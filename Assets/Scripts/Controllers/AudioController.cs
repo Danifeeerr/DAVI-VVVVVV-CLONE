@@ -6,7 +6,7 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioSource musicSource;
 
-    void Awake()
+    void OnEnable()
     {
         if (Instance == null)
         {
@@ -25,12 +25,18 @@ public class AudioController : MonoBehaviour
             sfxSource.PlayOneShot(clip);
     }
 
-    public void PlayMusic(AudioClip clip)
+public void PlayMusic(AudioClip clip)
+{
+    if (clip != null)
     {
-        if (clip != null)
-        {
-            musicSource.clip = clip;
-            musicSource.Play();
-        }
+        if (!musicSource.gameObject.activeInHierarchy)
+            musicSource.gameObject.SetActive(true);
+
+        if (!musicSource.enabled)
+            musicSource.enabled = true;
+
+        musicSource.clip = clip;
+        musicSource.Play();
     }
+}
 }
