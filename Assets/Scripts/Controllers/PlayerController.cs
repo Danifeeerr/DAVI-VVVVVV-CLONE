@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
     //-----------------------------------Funcions de moviment i gravetat-----------------------------------//
     public void TryChangeGravity()
     {
-        if (_gs != null && isOnGround)
+        if (_gs != null && isOnGround && Time.timeScale != 0f)
         {
             AudioController.Instance.PlaySFX(gravityChangeSFX);
             _gs.ChangeGravity();

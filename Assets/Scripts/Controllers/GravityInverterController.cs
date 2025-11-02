@@ -8,6 +8,12 @@ public class GravityInverterController : MonoBehaviour
     {
         gravityInvertable = true;
     }
+    void OnEnable()
+    {
+        this.GetComponent<SpriteRenderer>().enabled = true;
+        gravityInvertable = true;
+
+    }
 
     IEnumerator OnTriggerStay2D(Collider2D other)
     {
